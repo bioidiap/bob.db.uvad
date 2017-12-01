@@ -33,11 +33,10 @@ def test_frames():
     protocol = 'experiment_1'
     db.protocol = protocol
     db.replace_directories(os.path.expanduser('~/.bob_bio_databases.txt'))
-    if db.original_directory == '[UVAD_DIRECTORY]':
+    if db.original_directory is None:
         raise nose.SkipTest(
-            "Please update '[UVAD_DIRECTORY]' in your "
-            "'~/.bob_bio_databases.txt' to point to the directory where the "
-            "database's raw data are. This way we can test more features of "
-            "the database interface.")
+            "Please configure bob.db.uvad (refer to package documentation) to "
+            "point to the directory where the database's raw data are. This "
+            "way we can test more features of the database interface.")
     padfile = db.all_files(('train', 'dev'))[0][0]
     assert db.number_of_frames(padfile) == 270, db.number_of_frames(padfile)
