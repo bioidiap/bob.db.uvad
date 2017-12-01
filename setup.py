@@ -59,8 +59,8 @@ setup(
         'uvad = bob.db.uvad.driver:Interface',
       ],
 
-      'bob.bio.database': [
-        'pad-uvad = bob.db.uvad.config:database',
+      'bob.pad.database': [
+        'uvad = bob.db.uvad.config:database',
       ],
     },
 
