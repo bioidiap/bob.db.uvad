@@ -4,7 +4,6 @@
 """Test Units
 """
 from bob.db.uvad.config import database as db
-import os
 import nose
 
 
@@ -32,7 +31,6 @@ def test_database():
 def test_frames():
     protocol = 'experiment_1'
     db.protocol = protocol
-    db.replace_directories(os.path.expanduser('~/.bob_bio_databases.txt'))
     if db.original_directory is None:
         raise nose.SkipTest(
             "Please configure bob.db.uvad (refer to package documentation) to "
