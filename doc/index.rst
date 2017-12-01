@@ -8,6 +8,10 @@
 
 This package provides an interface to the Unicamp Video-Attack Database
 (`UVAD`_) database. The original data files need to be downloaded separately.
+After you have downloaded the dataset, you need to configure bob.db.uvad to
+find the dataset::
+
+    $ bob config set bob.db.uvad.directory /path/to/downloaded/dataset
 
 If you use this database, please cite the following publication::
 

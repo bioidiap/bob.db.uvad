@@ -3,6 +3,7 @@ from bob.pad.base.database import FileListPadDatabase
 from bob.pad.face.database import VideoPadFile
 from bob.pad.face.utils import frames, number_of_frames
 import numpy
+from bob.extension import rc
 
 
 class File(VideoPadFile):
@@ -13,7 +14,7 @@ class File(VideoPadFile):
 class Database(FileListPadDatabase):
     """The database interface for the UVAD dataset."""
 
-    def __init__(self, original_directory=None,
+    def __init__(self, original_directory=rc['bob.db.uvad.directory'],
                  bio_file_class=None, name='uvad',
                  original_extension=None, **kwargs):
         if bio_file_class is None:
