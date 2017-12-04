@@ -49,7 +49,11 @@ class Database(FileListPadDatabase):
             # crop frames to 720 x 1024
             h, w = numpy.shape(frame)[-2:]
             dh, dw = (h - 720) // 2, (w - 1024) // 2
-            frame = frame[:, dh:-dh, dw:-dw]
+            if dh != 0:
+                frame = frame[:, dh:-dh, :]
+            if dw != 0:
+                frame = frame[:, :, dw:-dw]
+            assert frame.shape == self.frame_shape, frame.shape
             yield frame
 
     def number_of_frames(self, padfile):

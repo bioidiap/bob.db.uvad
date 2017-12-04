@@ -38,3 +38,5 @@ def test_frames():
             "way we can test more features of the database interface.")
     padfile = db.all_files(('train', 'dev'))[0][0]
     assert db.number_of_frames(padfile) == 270, db.number_of_frames(padfile)
+    frame = next(db.frames(padfile))
+    assert db.frame_shape == frame.shape, frame.shape
