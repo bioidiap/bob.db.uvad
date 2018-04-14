@@ -1,14 +1,14 @@
 .. vim: set fileencoding=utf-8 :
 .. Tue Nov  7 16:30:33 CET 2017
 
-.. image:: https://img.shields.io/badge/docs-v0.0.1-yellow.svg
+.. image:: https://img.shields.io/badge/docs-stable-yellow.svg
    :target: http://beatubulatest.lab.idiap.ch/private/docs/bob/bob.db.uvad/stable/index.html
 .. image:: https://img.shields.io/badge/docs-latest-orange.svg
    :target: http://beatubulatest.lab.idiap.ch/private/docs/bob/bob.db.uvad/master/index.html
-.. image:: https://gitlab.idiap.ch/bob/bob.db.uvad/badges/v0.0.1/build.svg
-   :target: https://gitlab.idiap.ch/bob/bob.db.uvad/commits/v0.0.1
-.. image:: https://gitlab.idiap.ch/bob/bob.db.uvad/badges/v0.0.1/coverage.svg
-   :target: https://gitlab.idiap.ch/bob/bob.db.uvad/commits/v0.0.1
+.. image:: https://gitlab.idiap.ch/bob/bob.db.uvad/badges/master/build.svg
+   :target: https://gitlab.idiap.ch/bob/bob.db.uvad/commits/master
+.. image:: https://gitlab.idiap.ch/bob/bob.db.uvad/badges/master/coverage.svg
+   :target: https://gitlab.idiap.ch/bob/bob.db.uvad/commits/master
 .. image:: https://img.shields.io/badge/gitlab-project-0000c0.svg
    :target: https://gitlab.idiap.ch/bob/bob.db.uvad
 .. image:: https://img.shields.io/pypi/v/bob.db.uvad.svg
