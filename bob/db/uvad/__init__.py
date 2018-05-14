@@ -1,3 +1,6 @@
+UVAD_FRAME_SHAPE = (3, 720, 1024)
+"Shape of the video frames in the uvad database."
+
 from .query import Database, File
 
 
