@@ -54,6 +54,27 @@ class File(VideoPadFile):
         """
         return UVAD_FRAME_SHAPE
 
+    @property
+    def annotations(self):
+        path = self.make_path(
+            directory=self.original_directory, extension=None)
+        # the annotations are in the uvad/release_1/face-locations-v3 folder
+        path = path.replace('release_1', 'release_1/face-locations-v3')
+        path = path[:-3] + 'face'
+        annotations = {}
+        with open(path) as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                num_frame, x_eye_left, y_eye_left, x_eye_right, y_eye_right = \
+                    line.split()
+                annotations[num_frame] = {
+                    'reye': (int(y_eye_right), int(x_eye_right)),
+                    'leye': (int(y_eye_left), int(x_eye_left)),
+                }
+        return annotations
+
 
 class Database(FileListPadDatabase):
     """The database interface for the OULU-NPU dataset."""
@@ -104,21 +125,4 @@ class Database(FileListPadDatabase):
             The annotations as a dictionary, e.g.:
             ``{'0': {'reye':(re_y,re_x), 'leye':(le_y,le_x)}, ...}``
         """
-        path = padfile.make_path(
-            directory=self.original_directory, extension=None)
-        # the annotations are in the uvad/release_1/face-locations-v3 folder
-        path = path.replace('release_1', 'release_1/face-locations-v3')
-        path = path[:-3] + 'face'
-        annotations = {}
-        with open(path) as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                num_frame, x_eye_left, y_eye_left, x_eye_right, y_eye_right = \
-                    line.split()
-                annotations[num_frame] = {
-                    'reye': (int(y_eye_right), int(x_eye_right)),
-                    'leye': (int(y_eye_left), int(x_eye_left)),
-                }
-        return annotations
+        return padfile.annotations
