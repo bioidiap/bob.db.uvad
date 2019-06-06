@@ -70,12 +70,12 @@ class Database(FileListPadDatabase):
     def __init__(
         self,
         original_directory=rc["bob.db.uvad.directory"],
-        annotation_directory=rc["bob.db.uvad.annotation_dir"],
-        annotation_extension=".json",
-        annotation_type="json",
         name="uvad",
         pad_file_class=None,
         original_extension=None,
+        annotation_directory=rc["bob.db.uvad.annotation_dir"],
+        annotation_extension=".json",
+        annotation_type="json",
         **kwargs
     ):
         if pad_file_class is None:
@@ -87,6 +87,9 @@ class Database(FileListPadDatabase):
             original_directory=original_directory,
             pad_file_class=pad_file_class,
             original_extension=original_extension,
+            annotation_directory=annotation_directory,
+            annotation_extension=annotation_extension,
+            annotation_type=annotation_type,
             **kwargs
         )
 
@@ -99,6 +102,8 @@ class Database(FileListPadDatabase):
         classes=None,
         **kwargs
     ):
+        """overrides the parent method to add attributes to the files.
+        """
         files = super(Database, self).objects(
             groups=groups,
             protocol=protocol,
