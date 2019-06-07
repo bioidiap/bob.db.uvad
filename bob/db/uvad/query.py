@@ -1,6 +1,7 @@
 from . import UVAD_FRAME_SHAPE
 from bob.extension import rc
 from bob.io.video import reader
+from bob.db.base.annotations import read_annotation_file
 from bob.pad.base.database import FileListPadDatabase
 from bob.pad.face.database import VideoPadFile
 from pkg_resources import resource_filename
@@ -25,9 +26,9 @@ class File(VideoPadFile):
             h, w = numpy.shape(frame)[-2:]
             dh, dw = (h - 720) // 2, (w - 1024) // 2
             if dh != 0:
-                frame = frame[:, dh:-dh, :]
+                frame = frame[:, : -2 * dh, :]
             if dw != 0:
-                frame = frame[:, :, dw:-dw]
+                frame = frame[:, :, : -2 * dw]
             assert frame.shape == self.frame_shape, frame.shape
             yield frame
 
@@ -56,49 +57,66 @@ class File(VideoPadFile):
 
     @property
     def annotations(self):
-        path = self.make_path(
-            directory=self.original_directory, extension=None)
-        # the annotations are in the uvad/release_1/face-locations-v3 folder
-        path = path.replace('release_1', 'release_1/face-locations-v3')
-        path = path[:-3] + 'face'
-        annotations = {}
-        with open(path) as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                num_frame, x_eye_left, y_eye_left, x_eye_right, y_eye_right = \
-                    line.split()
-                annotations[num_frame] = {
-                    'reye': (int(y_eye_right), int(x_eye_right)),
-                    'leye': (int(y_eye_left), int(x_eye_left)),
-                }
+        # The annotations shipped with uvad are totally wrong. We load custom
+        # annotations here
+        path = self.make_path(self.annotation_directory, self.annotation_extension)
+        annotations = read_annotation_file(path, annotation_type=self.annotation_type)
         return annotations
 
 
 class Database(FileListPadDatabase):
     """The database interface for the OULU-NPU dataset."""
 
-    def __init__(self, original_directory=rc['bob.db.uvad.directory'],
-                 name='uvad', pad_file_class=None,
-                 original_extension=None, **kwargs):
+    def __init__(
+        self,
+        original_directory=rc["bob.db.uvad.directory"],
+        name="uvad",
+        pad_file_class=None,
+        original_extension=None,
+        annotation_directory=rc["bob.db.uvad.annotation_dir"],
+        annotation_extension=".json",
+        annotation_type="json",
+        **kwargs
+    ):
         if pad_file_class is None:
             pad_file_class = File
-        filelists_directory = resource_filename(__name__, 'lists')
+        filelists_directory = resource_filename(__name__, "lists")
         super(Database, self).__init__(
-            filelists_directory=filelists_directory, name=name,
+            filelists_directory=filelists_directory,
+            name=name,
             original_directory=original_directory,
             pad_file_class=pad_file_class,
             original_extension=original_extension,
-            **kwargs)
+            annotation_directory=annotation_directory,
+            annotation_extension=annotation_extension,
+            annotation_type=annotation_type,
+            **kwargs
+        )
 
-    def objects(self, groups=None, protocol=None, purposes=None,
-                model_ids=None, classes=None, **kwargs):
+    def objects(
+        self,
+        groups=None,
+        protocol=None,
+        purposes=None,
+        model_ids=None,
+        classes=None,
+        **kwargs
+    ):
+        """overrides the parent method to add attributes to the files.
+        """
         files = super(Database, self).objects(
-            groups=groups, protocol=protocol, purposes=purposes,
-            model_ids=model_ids, classes=classes, **kwargs)
+            groups=groups,
+            protocol=protocol,
+            purposes=purposes,
+            model_ids=model_ids,
+            classes=classes,
+            **kwargs
+        )
         for f in files:
             f.original_directory = self.original_directory
+            f.annotation_directory = self.annotation_directory
+            f.annotation_extension = self.annotation_extension
+            f.annotation_type = self.annotation_type
         return files
 
     def frames(self, padfile):
