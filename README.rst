@@ -1,13 +1,13 @@
 .. vim: set fileencoding=utf-8 :
 
-.. image:: https://img.shields.io/badge/docs-stable-yellow.svg
-   :target: https://www.idiap.ch/software/bob/docs/bob/bob.db.uvad/stable/index.html
+.. image:: https://img.shields.io/badge/docs-v0.0.3-yellow.svg
+   :target: https://www.idiap.ch/software/bob/docs/bob/bob.db.uvad/v0.0.3/index.html
 .. image:: https://img.shields.io/badge/docs-latest-orange.svg
    :target: https://www.idiap.ch/software/bob/docs/bob/bob.db.uvad/master/index.html
-.. image:: https://gitlab.idiap.ch/bob/bob.db.uvad/badges/master/build.svg
-   :target: https://gitlab.idiap.ch/bob/bob.db.uvad/commits/master
-.. image:: https://gitlab.idiap.ch/bob/bob.db.uvad/badges/master/coverage.svg
-   :target: https://gitlab.idiap.ch/bob/bob.db.uvad/commits/master
+.. image:: https://gitlab.idiap.ch/bob/bob.db.uvad/badges/v0.0.3/build.svg
+   :target: https://gitlab.idiap.ch/bob/bob.db.uvad/commits/v0.0.3
+.. image:: https://gitlab.idiap.ch/bob/bob.db.uvad/badges/v0.0.3/coverage.svg
+   :target: https://gitlab.idiap.ch/bob/bob.db.uvad/commits/v0.0.3
 .. image:: https://img.shields.io/badge/gitlab-project-0000c0.svg
    :target: https://gitlab.idiap.ch/bob/bob.db.uvad
 .. image:: https://img.shields.io/pypi/v/bob.db.uvad.svg
